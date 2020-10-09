@@ -19,6 +19,35 @@ pygame.display.set_caption("Juegazo")
 #reloj
 clock = pygame.time.Clock()
 
+#ventana de Pausa
+def pause():
+    paused = True
+
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    paused = False
+                elif event.key == pygame.K_p:
+                    pygame.quit()
+                    quit()
+            screen.blit(background, [0, 0])
+            draw_text(screen, "Pausado", 80, WIDTH // 2, HEIGHT // 4)
+            draw_text(screen, "Presione ESC para Continuar o P para Salir", 50, WIDTH // 2, HEIGHT // 2)
+            # draw_text(screen, "Presione una tecla", 20, WIDTH // 2, HEIGHT* 3/4)
+            pygame.display.flip()
+
+
+
+
+        pygame.display.update()
+        clock.tick(5)
+
+
+
 #dibujo el score
 def draw_text(surface, text, size,x ,y):
     front = pygame.font.SysFont("serif",size)
@@ -211,7 +240,8 @@ while running:
         elif event.type == pygame.KEYDOWN:#con la tecla space se dispara
             if event.key == pygame.K_SPACE:
                 player.shoot()
-
+            elif event.key == pygame.K_ESCAPE:
+                pause()
 
     all_sprites.update()
 
