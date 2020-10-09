@@ -19,6 +19,10 @@ pygame.display.set_caption("Juegazo")
 #reloj
 clock = pygame.time.Clock()
 
+#icono con la Cara de Luis
+gameIcon = pygame.image.load("assets/miniaturaJuegoCaraDeLuis.png")
+pygame.display.set_icon(gameIcon)
+
 #ventana de Pausa
 def pause():
     paused = True
@@ -160,8 +164,8 @@ class Explosion(pygame.sprite.Sprite):
 
 def show_go_screen():
     screen.blit(background,[0,0])
-    draw_text(screen, "Juegazo",65,WIDTH//2,HEIGHT//4)
-    draw_text(screen,"Presione una tecla para Jugar",27,WIDTH//2,HEIGHT//2)
+    draw_text(screen, "Juegazo",85,WIDTH//2,HEIGHT//4)
+    draw_text(screen,"Presione una tecla para Jugar",50,WIDTH//2,HEIGHT//2)
     #draw_text(screen, "Presione una tecla", 20, WIDTH // 2, HEIGHT* 3/4)
     pygame.display.flip()
     waiting = True
