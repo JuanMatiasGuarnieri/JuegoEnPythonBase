@@ -10,7 +10,10 @@ BLACK = (0, 0, 0)
 WHITE = (255,255,255)
 RED = (255,0,0)
 GREEN = (0,255,0)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
 #inicio librerias
 pygame.init()
 pygame.mixer.init()#inicio mixer(va a servir para configurar el sonido)
@@ -22,29 +25,83 @@ pygame.display.set_caption("Juegazo")
 #reloj
 clock = pygame.time.Clock()
 
+<<<<<<< HEAD
 #dibujo el score
 def draw_text(surface, text, size,x ,y):
     front = pygame.font.SysFont("serif",size)
+=======
+#icono con la Cara de Luis
+gameIcon = pygame.image.load("assets/miniaturaJuegoCaraDeLuis.png")
+pygame.display.set_icon(gameIcon)
+
+#ventana de Pausa
+def pause():
+    paused = True
+
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    paused = False
+                elif event.key == pygame.K_p:
+                    pygame.quit()
+                    quit()
+            screen.blit(background, [0, 0])
+            draw_text(screen, "Pausado", 80, WIDTH // 2, HEIGHT // 4)
+            draw_text(screen, "Presione ESC para Continuar o P para Salir", 50, WIDTH // 2, HEIGHT // 2)
+            # draw_text(screen, "Presione una tecla", 20, WIDTH // 2, HEIGHT* 3/4)
+            pygame.display.flip()
+
+
+
+
+        pygame.display.update()
+        clock.tick(5)
+
+
+
+#dibujo el score
+def draw_text(surface, text, size,x ,y):
+    front = pygame.font.SysFont("serif",size,bold=1)
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
     text_surface = front.render(text, True, BLACK)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x,y)
     surface.blit(text_surface, text_rect)
+<<<<<<< HEAD
 
 #dibujo la barra de vida
 def draw_shield_bar(surface,x,y,percentage):
     BAR_LENGHT=100
     BAR_HEIGHT=10
+=======
+#dibujo la barra de vida
+def draw_shield_bar(surface,x,y,percentage):
+    BAR_LENGHT=350
+    BAR_HEIGHT=35
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
     fill = (percentage/100)*BAR_LENGHT
     border = pygame.Rect(x,y,BAR_LENGHT,BAR_HEIGHT)
     fill = pygame.Rect(x,y,fill,BAR_HEIGHT)
     pygame.draw.rect(surface, GREEN, fill)
     pygame.draw.rect(surface,WHITE,border,2) #el 2 es para que sea un poco mas grueso que el 1 que va por defecto
 
+<<<<<<< HEAD
 #creo la clase jugador
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load("assets/ship.png").convert()
+=======
+#creo la calse jugador
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("assets/ship2.png").convert()
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
         self.image.set_colorkey(WHITE)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH // 2
@@ -59,12 +116,17 @@ class Player(pygame.sprite.Sprite):
             self.speed_x = -5
         if keystate[pygame.K_RIGHT]:#si se presiono la tecla derecha ejecuto:
             self.speed_x = 5
+        if keystate[pygame.K_UP]:
+            self.speed_y = -5
+        if keystate[pygame.K_DOWN]:
+            self.speed_y = 5
         self.rect.x += self.speed_x#le sumo la velocidad para mover al jugador
         #para que no se salga el jugador de la ventana pongo los siguientes limites
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
+<<<<<<< HEAD
 
     def shoot1(self):
         bullet = Bullet(self.rect.centerx-15,self.rect.top) #creo un disparo que sale del centro de arriba de la nave
@@ -80,11 +142,19 @@ class Player(pygame.sprite.Sprite):
         bullets.add(bullet)  # lo agrego a la lista de disparos
         laser_sound.play()  # reproduce el sonido cada que dispara
         ##
+=======
+    def shoot(self):
+        bullet = Bullet(self.rect.centerx,self.rect.top) #creo un disparo que sale del centro de arriba de la nave
+        all_sprites.add(bullet)#lo agrego a la lista de sprites
+        bullets.add(bullet)#lo agrego a la lista de disparos
+        laser_sound.play() #reproduce el sonido cada que dispara
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
 
 #creo meteoros
 class Meteor(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
+<<<<<<< HEAD
 		self.image = random.choice(meteor_images)
         #self.image = pygame.image.load("assets/meteorGrey_med1.png").convert()
 		self.image.set_colorkey(BLACK)#quito el fondo negro
@@ -107,6 +177,9 @@ class Huevo(pygame.sprite.Sprite):
 	def __init__(self):
 		super().__init__()
 		self.image = self.image = pygame.image.load("assets/egg.png").convert()#self.image = pygame.image.load("assets/meteorGrey_med1.png").convert()
+=======
+		self.image = pygame.image.load("assets/meteorGrey_med1.png").convert()
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
 		self.image.set_colorkey(BLACK)#quito el fondo negro
 		self.rect = self.image.get_rect()#obtengo la recta
 		self.rect.x = random.randrange(WIDTH - self.rect.width)#valor de inicio random
@@ -129,6 +202,54 @@ class Bullet(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("assets/laser0.png")
         self.image.set_colorkey(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.y = y
+        self.rect.centerx = x   #el center x es el centro del objeto
+        #velocidad
+        self.speedy = -10 #negativo por que el disparo sube por pantalla
+
+<<<<<<< HEAD
+    def update(self):
+        #el disparo sube automaticamente
+        self.rect.y += self.speedy
+        #una vez el disparo sale de la ventana la elimino de la lista de sprites para que no ocupe espacio de memoria
+        if self.rect.bottom < 0:
+            self.kill()
+
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self,center):#center:centro la explosion en el asteroide
+        super().__init__()
+        self.image = explosion_anim[0]
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+        self.frame = 0 #el contador que cambia las imagenes
+        self.last_update = pygame.time.get_ticks() #pausa el reloj del juego para ver los cambios
+        self.frame_rate = 50#control de velocidad de explosion
+    def update(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.frame_rate:
+            self.last_update = now
+            self.frame +=1
+            if self.frame == len(explosion_anim):#si llegue al final de la lista eliminos todos los sprites
+                self.kill()
+            else:
+                center = self.rect.center
+                self.image = explosion_anim[self.frame]
+                self.rect = self.image.get_rect()
+                self.rect.center = center
+
+def show_go_screen():
+    #screen.blit(background,[0,0])
+    screen.blit(fondo, [0, 0])
+    draw_text(screen, "Juegazo",65,WIDTH//2,HEIGHT//4)
+    draw_text(screen,"Presione una tecla para Jugar",27,WIDTH//2,HEIGHT//2)
+=======
+#creo los disparos
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.image.load("assets/laser1.png")
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.centerx = x   #el center x es el centro del objeto
@@ -165,10 +286,10 @@ class Explosion(pygame.sprite.Sprite):
                 self.rect.center = center
 
 def show_go_screen():
-    #screen.blit(background,[0,0])
-    screen.blit(fondo, [0, 0])
-    draw_text(screen, "Juegazo",65,WIDTH//2,HEIGHT//4)
-    draw_text(screen,"Presione una tecla para Jugar",27,WIDTH//2,HEIGHT//2)
+    screen.blit(background,[0,0])
+    draw_text(screen, "Juegazo",85,WIDTH//2,HEIGHT//4)
+    draw_text(screen,"Presione una tecla para Jugar",50,WIDTH//2,HEIGHT//2)
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
     #draw_text(screen, "Presione una tecla", 20, WIDTH // 2, HEIGHT* 3/4)
     pygame.display.flip()
     waiting = True
@@ -181,12 +302,15 @@ def show_go_screen():
                 waiting = False
 
 
+<<<<<<< HEAD
 meteor_images = []
 meteor_list = ["assets/meteorGrey_med1.png","assets/jerry.png","assets/jerry2.png","assets/asteroide1.png"]
 
 for img in meteor_list:
     meteor_images.append(pygame.image.load(img).convert())
 
+=======
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
 #Explosion imagenes
 explosion_anim = []
 for i in range(9):
@@ -199,7 +323,11 @@ for i in range(9):
 
 #cargar imagen de fondo
 background = pygame.image.load("assets/background.png").convert()
+<<<<<<< HEAD
 fondo = pygame.image.load("assets/fondo.jpg").convert()
+=======
+
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
 #cargar sonidos
 laser_sound = pygame.mixer.Sound("assets/laser5.ogg")
 explosion_sound = pygame.mixer.Sound("assets/explosion.wav")
@@ -215,8 +343,11 @@ def cargar_meteoro():
 #Game Over
 game_over = True
 
+<<<<<<< HEAD
 huevo_cont = 0 #variable que uso para contar huevos(botiquines)
 
+=======
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
 pygame.mixer.music.play(loops = - 1) #reproduzco musica
 
 #Bucle principal
@@ -239,6 +370,7 @@ while running:
         # grupo de disparos
         bullets = pygame.sprite.Group()
 
+<<<<<<< HEAD
         ####
         huevo_list = pygame.sprite.Group()
         #for i in range(8):
@@ -247,6 +379,8 @@ while running:
            # huevo_list.add(huevo)
         ####
 
+=======
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
         for i in range(8):
             meteor = Meteor()
             all_sprites.add(meteor)  # lo agrego a la lista de todos los sprites
@@ -262,6 +396,7 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:#con la tecla space se dispara
             if event.key == pygame.K_SPACE:
+<<<<<<< HEAD
                 player.shoot1()
                 player.shoot2()
 
@@ -270,12 +405,22 @@ while running:
 
     #detectar-colision-meteoro-disparo                   #2 true para que desaparezcan los disparos y los asteroides
 
+=======
+                player.shoot()
+            elif event.key == pygame.K_ESCAPE:
+                pause()
+
+    all_sprites.update()
+
+    #detectar-colision-meteoro-disparo                   #2 true para que desaparezcan los disparos y los asteroides
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
     hits = pygame.sprite.groupcollide(meteor_list,bullets,True,True)#groupcollide verifica las colisiones de un grupo contra otro grupo
     for hit in hits:
         score +=1 #aumenta 1 el score por cada asteroide destruido
         explosion_sound.play() #reproduce el sonido de la explosion
         explosion = Explosion(hit.rect.center)
         all_sprites.add(explosion)
+<<<<<<< HEAD
         ##
         if ((score % 5) == 0):
             if(huevo_cont < 1):
@@ -297,6 +442,10 @@ while running:
             #explosion = Explosion(hit.rect.center)
             #all_sprites.add(explosion)
 
+=======
+        cargar_meteoro() #vuelvo a crear meteros si los destrui
+
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
     #detectar-colision-nave-asteroide
     hits =pygame.sprite.spritecollide(player, meteor_list, True) #con True desapareden los objetos,con False no pasa nada
     for hit in hits:
@@ -312,7 +461,11 @@ while running:
     all_sprites.draw(screen)
 
     #Score
+<<<<<<< HEAD
     draw_text(screen, str(score),25,WIDTH//2,10)
+=======
+    draw_text(screen, str(score),45,WIDTH//2,10)
+>>>>>>> 7a4e9716b17c11fc38121bc7451b17516ec18e32
     #Salud
     draw_shield_bar(screen,5,5,player.shield)
 
