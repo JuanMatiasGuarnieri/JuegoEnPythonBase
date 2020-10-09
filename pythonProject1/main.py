@@ -73,7 +73,7 @@ def draw_shield_bar(surface,x,y,percentage):
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("assets/ship.png").convert()
+        self.image = pygame.image.load("assets/ship2.png").convert()
         self.image.set_colorkey(WHITE)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH // 2
