@@ -54,15 +54,15 @@ def pause():
 
 #dibujo el score
 def draw_text(surface, text, size,x ,y):
-    front = pygame.font.SysFont("serif",size)
+    front = pygame.font.SysFont("serif",size,bold=1)
     text_surface = front.render(text, True, BLACK)
     text_rect = text_surface.get_rect()
     text_rect.midtop = (x,y)
     surface.blit(text_surface, text_rect)
 #dibujo la barra de vida
 def draw_shield_bar(surface,x,y,percentage):
-    BAR_LENGHT=100
-    BAR_HEIGHT=10
+    BAR_LENGHT=350
+    BAR_HEIGHT=35
     fill = (percentage/100)*BAR_LENGHT
     border = pygame.Rect(x,y,BAR_LENGHT,BAR_HEIGHT)
     fill = pygame.Rect(x,y,fill,BAR_HEIGHT)
@@ -88,6 +88,10 @@ class Player(pygame.sprite.Sprite):
             self.speed_x = -5
         if keystate[pygame.K_RIGHT]:#si se presiono la tecla derecha ejecuto:
             self.speed_x = 5
+        if keystate[pygame.K_UP]:
+            self.speed_y = -5
+        if keystate[pygame.K_DOWN]:
+            self.speed_y = 5
         self.rect.x += self.speed_x#le sumo la velocidad para mover al jugador
         #para que no se salga el jugador de la ventana pongo los siguientes limites
         if self.rect.right > WIDTH:
@@ -273,7 +277,7 @@ while running:
     all_sprites.draw(screen)
 
     #Score
-    draw_text(screen, str(score),25,WIDTH//2,10)
+    draw_text(screen, str(score),45,WIDTH//2,10)
     #Salud
     draw_shield_bar(screen,5,5,player.shield)
 
